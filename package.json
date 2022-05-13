@@ -1,0 +1,14 @@
+{
+  "name": "bill-reminder-app",
+  "version": "1.0.0",
+  "description": "Bill Monitor App",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "jtsolana",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^18.2.3"
+  }
+}
