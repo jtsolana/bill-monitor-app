@@ -1,6 +1,8 @@
 // Modules
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron')
 const windowStateKeeper = require('electron-window-state')
+const remoteMain = require('@electron/remote/main')
+remoteMain.initialize()
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -18,8 +20,10 @@ function createWindow () {
     x: state.x, y: state.y,
     width: state.width, height: state.height,
     minWidth: 350, maxWidth: 650, minHeight: 300,
+    autoHideMenuBar: true,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   })
 
@@ -30,7 +34,8 @@ function createWindow () {
   state.manage(mainWindow)
 
   // Open DevTools - Remove for PRODUCTION!
-  mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools()
+  remoteMain.enable(mainWindow.webContents)
 
   // Listen for window being closed
   mainWindow.on('closed',  () => {
